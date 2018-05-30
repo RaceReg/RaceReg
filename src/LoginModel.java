@@ -22,4 +22,18 @@ public class LoginModel {
 		
 		return success;
 	}
+
+
+	public boolean login(String username, String password) {
+		boolean success = false;
+		
+		try {
+			success = manager.loginUser(username, password)
+		} catch (NoSuchAlgorithmException e) {
+			System.err.println("COULDN'T SECURE PASSWORD. CLOSING.");
+			System.exit(1);
+		}
+		
+		return success;
+	}
 }

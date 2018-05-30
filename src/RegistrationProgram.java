@@ -34,8 +34,7 @@ public class RegistrationProgram {
 			//JOptionPane.showMessageDialog(loginView, "Attempting Login", "RaceReg Login", JOptionPane.INFORMATION_MESSAGE);
 			loginView.setLoadingLayout();
 			
-			
-			
+			boolean sucessful = loginModel.login(loginView.getUsernameText(), loginView.getPassword());
 		}
 		
 	}

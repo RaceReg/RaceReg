@@ -103,5 +103,50 @@ public class MySQLManager {
         }
     	
     }
+
+	public User loginUser(String username, String password) throws NoSuchAlgorithmException {
+		//Check to see if username is actually there
+    	String query = "SELECT * FROM " + MySQLManager.TABLE_USERS + " WHERE " + MySQLManager.TABLE_USERS + ".username = '" + username + "';";
+		
+    	try {
+            ResultSet results = mysqlconnection.executeQuery(query); //get results from query
+            
+            int counter = 0;
+            String hashpass = "";
+            
+            while(results.next()){ //Go until all of the rows have been read in
+            	counter++;
+            	hashpass = results.getString(2);
+            }
+
+            if(counter <= 0 || counter > 1){
+                return false;
+            }
+            else {
+            	MessageDigest md = MessageDigest.getInstance("MD5");
+        		byte[] messageDigest = md.digest(password.getBytes());
+        		BigInteger number = new BigInteger(1, messageDigest);
+        		String hashtext = number.toString(16);
+        		while(hashtext.length() < 32) {
+        			hashtext = "0" + hashtext;
+        		}
+            	
+            	if(hashtext.equals(hashpass)) {
+            		return true;
+            	}
+            	else {
+            		return false;
+            	}
+            }
+            
+
+        } catch (SQLException e) {
+           	System.err.println("Error in checking if user is there OR in inserting user.");
+            return false;
+        }
+		
+		
+		return false;
+	}
     
 }
