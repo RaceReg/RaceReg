@@ -120,7 +120,7 @@ public class MySQLManager {
             }
 
             if(counter <= 0 || counter > 1){
-                return false;
+                return null;
             }
             else {
             	MessageDigest md = MessageDigest.getInstance("MD5");
@@ -132,7 +132,7 @@ public class MySQLManager {
         		}
             	
             	if(hashtext.equals(hashpass)) {
-            		return true;
+            		return new User(results.getInt(1), username, password, results.getString(4), results.getString(5), results.getString(6), results.getString(7));
             	}
             	else {
             		return false;
